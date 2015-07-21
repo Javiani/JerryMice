@@ -1,0 +1,13 @@
+body{
+	background-color:#dedede;
+}
+
+h1 strong{
+	font-size:20px;
+	display:inline-block;
+	vertical-align: baseline;
+}
+
+.site{
+	margin-bottom :100px;
+}

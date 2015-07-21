@@ -1,0 +1,42 @@
+<%
+	var style = '/css/main.css';
+	var javascript = '/js/main.js';
+	var list = model('list');
+%>
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="<%=style%>" type="text/css" />
+		<script type="text/javascript" src="<%=javascript%>" async></script>
+	</head>
+
+	<body>
+
+		<section class="site container">
+
+			<%- include partial/header %>
+
+			<h2>Example : Displaying view using a Model [List]</h2>
+			<div class="list-group">
+				<% list.items.forEach(function(item){%>
+					<a href="#" class="list-group-item <%=item.active%>"><%=item.text%></a>
+				<% }); %>
+			</div>
+
+			<h2>The service is the '/services/' url followed by model name:</h2>
+			<a href="/services/list">/services/list</a>
+
+			<h2>Here is an example of a bundle model, that uses the List model inside</h2>
+			<a href="/services/bundle">/services/bundle</a>
+
+			<p>
+				The bundle example uses the <strong>request</strong> global object to handle Query Strings.
+				Try to send ?lastname=somevalue to test it on /services/bundle.
+			</p>
+
+		</section>
+
+	</body>
+</html>
