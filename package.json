@@ -1,18 +1,18 @@
 {
-  "name": "JerryMice",
+  "name": "jerry-mice",
   "version": "0.0.1",
   "description": "A simple mock environment wrapper using Express.js",
   "main": "jerrymice.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node jerrymice"
+    "jerrymice": "node jerrymice"
   },
   "jerrymice":{
       "port"   :3000,
       "public" :"www",
+      "models" :"models",
       "routes" :{
-          "services" :"services/",
-          "models" :"models"
+          "services" :"services/"
       }
   },
   "author": "Javiani",
