@@ -1,5 +1,5 @@
 {
-  "name": "jerry-mice",
+  "name": "jerrymice",
   "version": "0.0.1",
   "description": "A simple mock environment wrapper using Express.js",
   "main": "jerrymice.js",
