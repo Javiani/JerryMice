@@ -5,7 +5,7 @@ var
 	app 		= express(),
 
 	models  	= './models/',
-	services	= '/'+ (pack.jerrymice.routes.services || 'services') + '/',
+	services	= '/'+ (pack.jerrymice.routes.services || 'services'),
 	www			= pack.jerrymice.public,
 	port		= pack.jerrymice.port,
 	views		=  __dirname + '/' + www;
@@ -23,7 +23,11 @@ var
 
 	//Routes
 	app.get( services + ':name', service );
-	app.get( '*', render );
+
+	//Generic url matcher, gets everything that looks like a REST excluding extentions files.
+	// It's an variation of the form finded here:
+	// http://stackoverflow.com/questions/23178316/regular-expression-for-excluding-file-types-exe-and-js
+	app.get(/^[^.]+$|\.(?!(\w*)$)([^.]+$)/, render );
 
 	//Starting Server
 	app.listen( port );
@@ -39,7 +43,7 @@ var
 	//Middlewares
 	function service( req, res ){
 		var model = require( models + req.params.name );
-		res.send( model() );
+		res.jsonp( model() );
 	}
 
 	function globals( req, res, next ){
@@ -61,7 +65,7 @@ var
 	function error( req, res ){
 		return function( err, html ){
 			if( err ) res.render('views/error',{ err : err }); // File doesn't exist
-			else res.end( html );
+			res.end( html );
 		};
 	}
 
