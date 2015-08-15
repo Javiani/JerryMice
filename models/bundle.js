@@ -1,7 +1,7 @@
 module.exports = function(){
 
-	var list = global.model('list');
-	var lastname = global.request.query.lastname;
+	var list = model('list');
+	var lastname = request.query.lastname;
 
 	return {
 

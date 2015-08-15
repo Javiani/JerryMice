@@ -1,0 +1,32 @@
+html, body, main{ height:100%; }
+
+*[data-cloak]{
+    visibility:hidden;
+    position:absolute;
+}
+
+.ready *[data-cloak]{
+    visibility:visible;
+    position:static;
+}
+
+.preview{
+    display:block;
+    height:200px;
+}
+
+.fradio{
+    position:relative;
+    display:inline-block;
+}
+
+.fradio input{
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0;
+}
+
+form .btn{
+    width:100%;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<%
+			site.section = site.section || ['Section'];
+			site.title   = site.title || 'Site - Title';
+			site.app	 = site.app || '';
+		%>
+		<title><%=site.title%></title>
+		<%- include('../partials/head.htm') %>
+	</head>
+
+	<body data-app="<%=site.app%>">
+
+		<main>
+
+			<header>
+				<%- include('../partials/navbar.htm', { breadcrumb :site.section }); %>
+			</header>
+
+			<section class="body container">
+				<%- site.content %>
+			</section>
+
+		</main>
+
+	</body>
+</html>

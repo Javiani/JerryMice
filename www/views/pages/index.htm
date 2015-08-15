@@ -1,0 +1,37 @@
+<%
+	global.site.layout = 'index.htm';
+%>
+
+<section class="cart" data-controller="cart-table">
+
+	<section data-component="view" class="table-section">
+
+		<table class="table" data-not="empty">
+			<thead>
+				<th></th>
+				<th>Produto</th>
+				<th>Quantidade</th>
+				<th>Preço</th>
+				<th class="text-right">
+					<form class="form-inline">
+						<input type="text" class="form-control" placeholder="CEP" />
+						<button class="btn btn-success">Ok</button>
+					</form>
+				</th>
+			</thead>
+			<tbody>
+				<%- include('../../partials/cart/lines.htm'); %>
+				<%- include('../../partials/cart/lines.htm'); %>
+				<%- include('../../partials/cart/lines.htm'); %>
+			</tbody>
+		</table>
+
+	</section>
+
+	<section data-component="view" data-render="true">
+		<div data-if="empty" data-cloak>
+			<h4 class="alert alert-warning text-center">Nenhum produto adicionado ao carrinho</h4>
+		</div>
+	</section>
+
+</section>
