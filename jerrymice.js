@@ -1,17 +1,19 @@
 var
 	express 	= require('express'),
+	ejs			= require('ejs'),
 	pack		= require('./package.json'),
 	app 		= express(),
 
-	models  	= './'+ pack.jerrymice.models + '/',
-	services	= '/'+ pack.jerrymice.routes.services,
+	models  	= './models/',
+	services	= '/'+ (pack.jerrymice.routes.services || 'services') + '/',
 	www			= pack.jerrymice.public,
 	port		= pack.jerrymice.port,
 	views		=  __dirname + '/' + www;
 
 	//Setting Template engine systems
-	app.set( 'view engine', 'ejs' );
-	app.set( 'views', views);
+	app.set( 'view engine', 'htm' );
+	app.engine( 'htm', ejs.renderFile );
+	app.set( 'views' , views);
 
 	//Setting Static folders
 	app.use( express.static( www ) );
@@ -25,16 +27,14 @@ var
 
 	//Starting Server
 	app.listen( port );
+	//Welcome
+	welcome();
 
-	//Global functions utilities
-	global.require = require;
+	global.site = {};
 
 	global.model = function( name ){
 		return require( models + name )();
 	};
-
-	//Welcome
-	welcome();
 
 	//Middlewares
 	function service( req, res ){
@@ -50,15 +50,17 @@ var
 
 	function render( req, res ){
 
-		var url = req.path.substring( 1 ).replace(/\/*$/, ''); // Trailling slashs at the end of line
+		var url = req.path.replace(/\/*$/, ''); // Trailling slashs at the end of line
 
-		res.header('Content-Type', 'text/html');
-		res.render( url, global, error( req, res ) );
+		res.render( 'views' + url, global, function( err, html ){
+			global.site.content = err || html;
+			res.render( 'layouts/' + global.site.layout, global, error( req, res ) );
+		});
 	}
 
 	function error( req, res ){
 		return function( err, html ){
-			if( err ) res.render('error',{ err : err }); // File doesn't exist
+			if( err ) res.render('views/error',{ err : err }); // File doesn't exist
 			else res.end( html );
 		};
 	}

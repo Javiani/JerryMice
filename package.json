@@ -10,7 +10,6 @@
   "jerrymice":{
       "port"   :3000,
       "public" :"www",
-      "models" :"models",
       "routes" :{
           "services" :"services/"
       }
