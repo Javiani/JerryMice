@@ -31,10 +31,12 @@ var
 
 	//Starting Server
 	app.listen( port );
+
 	//Welcome
 	welcome();
 
 	global.site = {};
+	global.data = {};
 
 	global.model = function( name ){
 		return require( models + name )();
@@ -63,9 +65,14 @@ var
 	}
 
 	function error( req, res ){
+
 		return function( err, html ){
+
 			if( err ) res.render('views/error',{ err : err }); // File doesn't exist
 			res.end( html );
+
+			global.data = {};
+			global.site = {};
 		};
 	}
 

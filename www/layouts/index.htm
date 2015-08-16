@@ -12,7 +12,6 @@
 	<body>
 
 		<main>
-
 			<header>
 				<%- include('../partials/navbar.htm', { breadcrumb :site.section }); %>
 			</header>
@@ -20,8 +19,15 @@
 			<section class="body container">
 				<%- site.content %>
 			</section>
-
 		</main>
+
+		<footer class="text-center">
+			<hr />
+			<ul class="list-unstyled">
+				<li><a href="https://bootswatch.com"><strong>Theme</strong> : bootswatch.com</a></li>
+				<li><a href="https://getbootstrap.com"><strong>Powered By</strong> : getbootstrap.com</a></li>
+			</ul>
+		</footer>
 
 	</body>
 </html>
