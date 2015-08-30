@@ -30,7 +30,7 @@ var
 	app.get(/^[^.]+$|\.(?!(\w*)$)([^.]+$)/, render );
 
 	//Starting Server
-	app.listen( port );
+	app.listen( process.env.PORT || port || 5000 );
 
 	//Welcome
 	welcome();
