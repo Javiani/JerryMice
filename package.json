@@ -5,7 +5,8 @@
   "main": "jerrymice.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "jerrymice": "node jerrymice"
+    "jerrymice": "node jerrymice",
+    "start": "node jerrymice"
   },
   "jerrymice":{
       "port"   :3000,
