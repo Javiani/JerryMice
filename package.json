@@ -1,6 +1,6 @@
 {
   "name": "jerrymice",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple prototype environment wrapper using Express.js",
   "main": "index.js",
   "scripts": {
