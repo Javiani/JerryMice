@@ -6,14 +6,14 @@
 			site.title   = site.title || 'JerryMice - Layout Default';
 		%>
 		<title><%=site.title%></title>
-		<%- include('../partials/head.htm') %>
+		<%- include('../components/head.htm') %>
 	</head>
 
 	<body>
 
 		<main>
 			<header>
-				<%- include('../partials/navbar.htm', { breadcrumb :site.section }); %>
+				<%- include('../components/navbar.htm', { breadcrumb :site.section }); %>
 			</header>
 
 			<section class="body container">

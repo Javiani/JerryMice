@@ -1,7 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<body>
-		<h1>Express</h1>
-		<p><%=err%></p>
-	</body>
-</html>
+<%
+	site.layout  = 'index.htm';
+	site.section = ['Error'];
+
+%>
+
+<section class="page-header text-center">
+	<h1>Express</h1>
+	<%=error%>
+</section>
