@@ -1,4 +1,4 @@
-var jerrymice = require('./index');
+var jerrymice = require('jerrymice');
 
 jerrymice.run({
 	baseUrl		:__dirname,
