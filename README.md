@@ -1,4 +1,7 @@
+
 # JerryMice
+
+![jerrymice](www/assets/img/jerrymice.png)
 
 A simple prototype environment wrapper using Express.js
 
