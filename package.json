@@ -10,6 +10,6 @@
   "author": "Javiani",
   "license": "ISC",
   "dependencies": {
-    "jerrymice": "^1.1.1"
+    "jerrymice": "^1.1.2"
   }
 }
