@@ -19,7 +19,8 @@ function set( options ){
 		models	:(options.baseUrl || '.') + '/'+ www + '/models/',
 		views	:'./' + www,
 		404		:(options[404] || '404'),
-		error   :(options.error || 'error')
+		error   :(options.error || 'error'),
+		services:options.services || /services/
 	};
 
 	return config;
@@ -28,10 +29,11 @@ function set( options ){
 //Middlewares
 function service( req, res ){
 
-	var model, reponse;
+	var model, reponse, url;
+	url = req.path.split(config.services.toString()).pop();
 
 	try{
-		model = require( config.models + path.basename(req.path) );
+		model = require( config.models + path.normalize(url) );
 		response = model.call? model() :model;
 		if( req.query.callback )
 			res.jsonp( response );
@@ -92,7 +94,7 @@ function set_express(){
 	app.use( express.static( config.www ) );
 	app.use( globals );
 
-	app.get(config.services || /service/, service );
+	app.get(config.services, service );
 	//Generic url matcher, gets everything that looks like a REST excluding extentions files.
 	// It's an variation of the form finded here:
 	// http://stackoverflow.com/questions/23178316/regular-expression-for-excluding-file-types-exe-and-js
