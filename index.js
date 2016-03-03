@@ -84,7 +84,7 @@ function error(err, req, res, next ){
 	}
 }
 
-function set_express(){
+function set_express( callback ){
 
 	//Setting Template engine systems
 	app.set( 'view engine', 'htm' );
@@ -95,6 +95,11 @@ function set_express(){
 	app.use( globals );
 
 	app.get(config.services, service );
+
+	if( callback ){
+		callback( app, irender );
+	}
+
 	//Generic url matcher, gets everything that looks like a REST excluding extentions files.
 	// It's an variation of the form finded here:
 	// http://stackoverflow.com/questions/23178316/regular-expression-for-excluding-file-types-exe-and-js
@@ -117,11 +122,7 @@ module.exports = {
 	run :function( options, fn ){
 
 		set( options );
-
-		if( fn && fn.call )
-			fn( app, config );
-
-		set_express();
+		set_express( fn );
 
 		app.listen( process.env.PORT || options.port );
 		welcome();
