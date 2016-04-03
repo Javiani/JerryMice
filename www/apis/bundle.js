@@ -1,6 +1,6 @@
 module.exports = function(){
 
-	var list = model('folder/list');
+	var list = api('folder/list');
 	var lastname = request.query.lastname;
 
 	return {

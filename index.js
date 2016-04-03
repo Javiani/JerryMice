@@ -8,15 +8,15 @@ function set( options ){
 
 	var www;
 
-	global.model = function( name ){
-		return require( config.models + name )();
+	global.api = function( name ){
+		return require( config.apis + name )();
 	};
 
 	www 	= options.public || 'www';
 	config 	=  {
 		www 	:www,
 		port	:options.port || 3000,
-		models	:(options.baseUrl || '.') + '/'+ www + '/models/',
+		apis	:(options.baseUrl || '.') + '/'+ www + '/apis/',
 		views	:'./' + www,
 		404		:(options[404] || '404'),
 		error   :(options.error || 'error'),
@@ -29,12 +29,12 @@ function set( options ){
 //Middlewares
 function service( req, res ){
 
-	var model, reponse, url;
+	var api, reponse, url;
 	url = req.path.split(config.services.toString()).pop();
 
 	try{
-		model = require( config.models + path.normalize(url) );
-		response = model.call? model() :model;
+		api = require( config.apis + path.normalize(url) );
+		response = api.call? api() :api;
 		if( req.query.callback )
 			res.jsonp( response );
 		else
