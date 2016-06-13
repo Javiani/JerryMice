@@ -1,5 +1,5 @@
 {
-  "name": "jerrymice-documentation",
+  "name": "jerrymice-nunjucks",
   "version": "0.0.0",
   "description": "A simple prototype environment wrapper using Express.js",
   "main": "index.js",
@@ -10,6 +10,7 @@
   "author": "Javiani",
   "license": "ISC",
   "dependencies": {
-    "jerrymice": "^1.1.2"
+    "express": "^4.13.4",
+    "nunjucks": "^2.4.2"
   }
 }
