@@ -3,24 +3,24 @@
 	<div class="container-fluid">
 
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Prototype / <%= breadcrumb.join(' / ') %></a>
+			<a class="navbar-brand" href="#">Prototype / </a>
 		</div>
 
 		<ul class="nav navbar-nav navbar-left">
-			<li class="<%= data.is_home? 'active' : '' ;%>">
+			<li class="active">
 				<a href="/">index</a>
 			</li>
-			<li class="<%= data.is_page? 'active' : ''; %>">
-				<a href="/pages/index">pages/index</a>
+			<li>
+				<a href="/pages/">pages/index</a>
 			</li>
 			<li>
-				<a href="/services/bundle">services/bundle</a>
+				<a href="/service/bundle">services/bundle</a>
 			</li>
 			<li>
-				<a href="/services/bundle?callback=mycallback">services/bundle (JSONP)</a>
+				<a href="/service/bundle?callback=mycallback">services/bundle (JSONP)</a>
 			</li>
 			<li>
-				<a href="/services/folder/list">services/folder/list</a>
+				<a href="/service/folder/list">services/folder/list</a>
 			</li>
 		</ul>
 	</div>

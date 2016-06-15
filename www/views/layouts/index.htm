@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 	<head>
-		<%
-			site.section = site.section || ['Section'];
-			site.title   = site.title || 'JerryMice - Layout Default';
-		%>
-		<title><%=site.title%></title>
-		<%- include('../components/head.htm') %>
+		<title>
+			{% block title %} Default title {% endblock %}
+		</title>
+		{% include 'components/head.htm' %}
 	</head>
 
 	<body>
 
 		<main>
 			<header>
-				<%- include('../components/navbar.htm', { breadcrumb :site.section }); %>
+				{% include 'components/navbar.htm' %}
 			</header>
 
 			<section class="body container">
-				<%- site.content %>
+				{% block content %} Default content {% endblock %}
 			</section>
 		</main>
 
