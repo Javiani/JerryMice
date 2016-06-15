@@ -6,10 +6,8 @@
 var	nunjucks  = require('nunjucks'),
 	express   = require('express'),
 	app       = express(),
+	port	  = 3000,
 	env;
-
-// It seems to be not necessary...
-//app.use( express.static( 'www') );
 
 env = nunjucks.configure('www/views', {
 	express   : app,
@@ -17,9 +15,7 @@ env = nunjucks.configure('www/views', {
 	watch	  : true
 });
 
-/*
-	@Middlewares
-*/
+/* @Middlewares */
 
 //Globals
 var globals = require('./middlewares/globals');
@@ -33,4 +29,15 @@ app.get( /service/, api(app, { folder: 'api'}) );
 var routes = require('./middlewares/routes');
 app.get( /^[^.]+$|\.(?!(\w*)$)([^.]+$)/, routes(app) );
 
-app.listen( 3000 );
+app.listen( port );
+
+welcome();
+
+function welcome(){
+	console.log('\x1b[32m%s\x1b[0m------------------------------------------\x1b[32m%s\x1b[0m', '+', '+');
+	console.log(' \x1b[32m%s\x1b[0m Jerry Mice \x1b[32m%s\x1b[0m', '☁', '☁' );
+	console.log(' \x1b[36m%s\x1b[0m :Express.js + Nunjucks', '@Powered by');
+	console.log(' \x1b[36m%s\x1b[0m :\x1b[32m%s\x1b[0m', '@Served at', 'http://localhost:'+port+'/');
+	console.log(' \x1b[36m%s\x1b[0m : Hit ctrl+c to shutdown server', '@Quit');
+	console.log('\x1b[32m%s\x1b[0m------------------------------------------\x1b[32m%s\x1b[0m', '+', '+');
+}
