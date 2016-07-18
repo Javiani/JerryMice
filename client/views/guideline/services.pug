@@ -1,0 +1,27 @@
+extends /layouts/default
+
+block vars
+	- var section = 'Services'
+
+block content
+	each data, name in mock.data
+		div.row
+			div.col-md-4
+				h3.text-primary #{name}
+
+				table.table.table-striped
+					tbody
+						each value, key in data
+							- var type = value.constructor.name
+							tr
+								td
+									strong #{key}
+								td
+									label.label.label-warning #{type}
+
+								- if ( type != 'Object' )
+									td #{value}
+								- else
+									td
+										a(href="#" + key) #{key}
+		hr

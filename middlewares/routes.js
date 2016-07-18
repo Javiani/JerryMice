@@ -1,32 +1,34 @@
-var path = require('path');
+import path from 'path'
 
-module.exports = function( app, config ){
+export default ( req, res, next ) => {
 
-	config = config || {};
+	let url 	= path.resolve( req.path )
+	let config 	= { url, req, res, next }
 
-	return function( req, res, next ){
+	render( config )
+}
 
-		var url, filepath, ext;
+function render( config ){
 
-		url = path.normalize( req.path );
-		url = url == '/' ? url + 'index' : url;
-		filepath = url.substring(1).replace(/\/$/g, '');
-		ext = ( config.ext || '.htm' );
+	let url  = config.url
+	let res  = config.res
+	let next = config.next
 
-		res.render( filepath + ext, function( err, content ){
+	res.render( url.replace(/^\//, ''), function( err, content ){
 
-			//Handles index default look-up
-			if( !content && filepath != 'index' ){
-				res.render( path.join( filepath, ('index' + ext) ));
+		let name = path.basename( url )
+
+		if( err ){
+			if( name != 'index' ){
+				config.url = path.resolve( url, 'index')
+				render( config )
 			}
-			//Handles successfull index look-up
-			else if( content ){
-				res.send( content );
-			}
-			//Sends error to the application flow
-			else{
-				next( err );
-			}
-		});
-	};
-};
+			else if( err.message.match(/template not found/) )
+				res.render('404')
+			else
+				next( err )
+		}else{
+			res.send( content )
+		}
+	})
+}
