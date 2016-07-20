@@ -1,18 +1,19 @@
 import path from 'path'
 
-export default ( req, res, next ) => {
+export default ( options ) =>{
 
-	let url 	= path.resolve( req.path )
-	let config 	= { url, req, res, next }
+	return ( req, res, next ) => {
 
-	render( config )
+		let url 	= path.resolve( req.path )
+		let config 	= { url, req, res, next, options }
+
+		render( config )
+	}
 }
 
 function render( config ){
 
-	let url  = config.url
-	let res  = config.res
-	let next = config.next
+	let { url, res, next } = config
 
 	res.render( url.replace(/^\//, ''), function( err, content ){
 
@@ -20,11 +21,11 @@ function render( config ){
 
 		if( err ){
 			if( name != 'index' ){
-				config.url = path.resolve( url, 'index')
+				config.url = path.resolve( url, 'index' )
 				render( config )
 			}
-			else if( err.message.match(/template not found/) )
-				res.render('404')
+			else if( err.message.match(/template not found|Failed to lookup/) )
+				res.render( config.options['404'] )
 			else
 				next( err )
 		}else{
