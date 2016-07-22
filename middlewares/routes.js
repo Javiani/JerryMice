@@ -20,7 +20,8 @@ function render( config ){
 		let name = path.basename( url )
 
 		if( err ){
-			if( name != 'index' ){
+			console.log( err )
+			if( !path.basename(name) && name != 'index' ){
 				config.url = path.resolve( url, 'index' )
 				render( config )
 			}

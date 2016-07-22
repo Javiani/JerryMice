@@ -1,0 +1,40 @@
+{% extends 'layouts/default.njk' %}
+
+{% set section = 'Services' %}
+
+{% block vars %}
+
+{% endblock %}
+
+{% block content %}
+	{% for name, data in mock.data %}
+		<div class="row">
+			<div class="col-md-4">
+				<h3 class="text-primary">{{name}}</h3>
+				<table class="table table-striped">
+					<tbody>
+						{% for key, value in data %}
+							{% set type = getType(value) %}
+							<tr>
+								<td>
+									<strong>{{ key }}</strong>
+								</td>
+								<td>
+									<label class="label label-warning" for="">{{ type }}</label>
+									{% if type != 'Object' %}
+										<td>{{ value }}</td>
+									{% else %}
+										<td>
+											<a href="#{{key}}">{{key}}</a>
+										</td>
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	{% endfor %}
+{% endblock %}
