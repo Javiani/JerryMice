@@ -4,7 +4,7 @@ export default
 class Application extends JerryMice{
 
 	constructor(){
-		super()
+		super({ baseURL: './server' })
 	}
 
 	engine( app ){
@@ -19,8 +19,8 @@ class Application extends JerryMice{
 	}
 
 	routes( app ){
-		app.get('/mock/*', this.middleware.services({}))
-		app.get( '*', this.middleware.routes({ 404 :'404' }))
+		app.get('/mock/*', this.route.services({}))
+		app.get( '*', this.route.default({ 404 :'404' }))
 	}
 }
 

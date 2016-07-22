@@ -3,11 +3,10 @@ import path from 'path'
 
 export default ( app ) => {
 
+	let data 	 = glob.sync('./server/mock/data/**/*.js').reduce( reduce, {})
+	let services = glob.sync('./server/mock/services/**/*.js').reduce( reduce, {})
+
 	return ( req, res, next ) =>{
-
-		let data 	 = glob.sync('./server/mock/data/**/*.js').reduce( reduce, {})
-		let services = glob.sync('./server/mock/services/**/*.js').reduce( reduce, {})
-
 		app.locals.mock = { data, services }
 		next()
 	}

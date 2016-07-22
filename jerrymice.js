@@ -3,25 +3,36 @@ import glob from 'glob'
 import path from 'path'
 
 let app 	 = express()
-let settings = { port :3000, express, app, middlewares: 'middlewares' }
-let ignore 	 = /start|output|constructor/
+let ignore 	 = /start|constructor/
 
-export default
-class JerryMice{
+export default class JerryMice{
 
 	constructor( config ){
-		this.settings = Object.assign( {}, settings, config )
-		this.middleware = middlewares()
+
+		let settings = Object.assign( {}, JerryMice.settings, config )
+		let baseURL = settings.baseURL
+
+		let middlewares = path.resolve( `${baseURL}`, `${settings.middlewares}` )
+		let routes = path.resolve( `${baseURL}`, `${settings.routes}` )
+
+		this.settings = settings
+		this.middleware = JerryMice.read( middlewares )
+		this.route = JerryMice.read( routes )
 	}
 
 	start(){
 		this.settings.app.listen( this.settings.port )
-		this.output()
+		JerryMice.output( this.settings )
 	}
+}
 
-	output(){
-		output( this.settings )
-	}
+JerryMice.settings = {
+	express,
+	app,
+	baseUrl: '',
+	port :3000,
+	middlewares: 'middlewares',
+	routes :'routes'
 }
 
 JerryMice.bootstrap = ( Class, options )=>{
@@ -29,6 +40,28 @@ JerryMice.bootstrap = ( Class, options )=>{
 	run( instance )
 	instance.start()
 }
+
+JerryMice.read = ( folder )=>{
+	return glob.sync(`${folder}/**/*.js`)
+		.reduce( ( acc, file ) => {
+
+			let m = require( file )
+			m = m.default? m.default :m
+			acc[ path.basename( file, '.js') ] = m
+
+			return acc
+		}, {})
+}
+
+JerryMice.output = ( config )=>{
+	console.log('\x1b[32m%s\x1b[0m------------------------------------------\x1b[32m%s\x1b[0m', '+', '+')
+	console.log(' \x1b[32m%s\x1b[0m Jerry Mice \x1b[32m%s\x1b[0m', '☁', '☁' )
+	console.log(' \x1b[36m%s\x1b[0m :Express.js', '@Powered by')
+	console.log(' \x1b[36m%s\x1b[0m :\x1b[32m%s\x1b[0m', '@Served at', 'http://localhost:'+config.port+'/')
+	console.log(' \x1b[36m%s\x1b[0m : Hit ctrl+c to shutdown server', '@Quit')
+	console.log('\x1b[32m%s\x1b[0m------------------------------------------\x1b[32m%s\x1b[0m', '+', '+')
+}
+
 
 let run = ( instance )=>{
 
@@ -41,25 +74,4 @@ let run = ( instance )=>{
 			instance[ name ].call( instance, app, express )
 		}
 	})
-}
-
-let middlewares = ()=>{
-
-	return glob.sync(`./${settings.middlewares}/**/*.js`)
-		.reduce( ( acc, file ) => {
-
-			let middleware = require( file ).default
-			acc[ path.basename( file, '.js') ] = middleware
-			return acc
-
-		}, {})
-}
-
-let output = ( config )=>{
-	console.log('\x1b[32m%s\x1b[0m------------------------------------------\x1b[32m%s\x1b[0m', '+', '+');
-	console.log(' \x1b[32m%s\x1b[0m Jerry Mice \x1b[32m%s\x1b[0m', '☁', '☁' );
-	console.log(' \x1b[36m%s\x1b[0m :Express.js', '@Powered by');
-	console.log(' \x1b[36m%s\x1b[0m :\x1b[32m%s\x1b[0m', '@Served at', 'http://localhost:'+config.port+'/');
-	console.log(' \x1b[36m%s\x1b[0m : Hit ctrl+c to shutdown server', '@Quit');
-	console.log('\x1b[32m%s\x1b[0m------------------------------------------\x1b[32m%s\x1b[0m', '+', '+');
 }

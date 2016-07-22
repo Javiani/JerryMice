@@ -14,18 +14,17 @@ export default ( options ) =>{
 function render( config ){
 
 	let { url, res, next } = config
+	let name = path.basename( url )
 
-	res.render( url.replace(/^\//, ''), function( err, content ){
-
-		let name = path.basename( url )
+	res.render( url.replace(/^\//, ''), ( err, content ) =>{
 
 		if( err ){
 			if( name != 'index' ){
 				config.url = path.resolve( url, 'index' )
 				render( config )
 			}
-			else if( err.message.match(/template not found|Failed to lookup/) )
-				res.render( config.options['404'] )
+			else if( err.message.match(/failed to lookup/i) )
+				res.render( config.options['404'] || '404' )
 			else
 				next( err )
 		}else{

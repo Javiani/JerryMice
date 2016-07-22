@@ -9,6 +9,7 @@ export default ( app, config ) =>{
 		url = path.resolve(`./server/${req.path}`)
 
 		try{
+
 			response = require( url ).default
 			response = response.call? response.call() :response
 
@@ -16,6 +17,7 @@ export default ( app, config ) =>{
 				res.jsonp( response )
 			else
 				res.send( response )
+
 		}catch( error ){
 			res.status(500).send({ error })
 		}
